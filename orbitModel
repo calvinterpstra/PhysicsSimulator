@@ -1,0 +1,27 @@
+from planet import *
+
+earth = Planet(pos = vector(10,0,0),
+               radius = 0.5 ,
+               color = color.green,
+               mass = 1,
+               initialVel = vector(0,5,0),
+               initialAccel = vector(0,0,0))
+sun = Planet(pos = vector(0,0,0),
+             radius = 1,
+             color = color.yellow,
+             mass = 10,
+             initialVel = vector(0,0,0),
+             initialAccel = vector(0,0,0))
+
+t = 0
+while true:
+    rate(10)
+
+    fnetEarth = (double(6.67*math.pow(10,-11))*double(earth.mass)*double(sun.mass))/(math.pow((earth.body.pos - sun.body.pos).mag,2))
+    fnetEarthVect = fnetEarth*norm(earth.body.pos - sun.body.pos)
+    accelEarthVect = fnetEarthVect/earth.mass
+    print(mag(earth.initialVel + accelEarthVect*t))
+    earth.body.pos += earth.initialVel*t + (1/2)*accelEarthVect*math.pow(t,2)
+    
+    
+    t = t+1
